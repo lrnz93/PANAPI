@@ -43,7 +43,6 @@ def commit_config(apikey):
     try:
         r_editrule = requests.get(URL + "&key=" + apikey)
 
-
     except Exception:
         print "error"
 
@@ -58,7 +57,3 @@ print r_code
 
 r_commit = commit_config(APIKEY)
 print r_commit
-
-
-
-
