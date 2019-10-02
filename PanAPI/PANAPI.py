@@ -2,7 +2,6 @@ import requests
 import xml.etree.ElementTree as ET
 import sys
 
-
 #Static values
 APIKEY = "LUFRPT15OC9NSjRobndlMmsvT3dBazRweU9HaHNnczQ9VkhLS3oyLzFiaDdGMm9LTHU3eW0rRW9FTEh2bDhHbUpsQzg4QUlIQkdpRExUYjlTb2RDZHdoY1R6eGs5cmY0Tg=="
 VSYS = "\"vsys1\""
@@ -23,16 +22,13 @@ def list_security_rules(url, vsys, apikey):
     for child in root_seclist.iter('entry'):
         output.append(child.attrib['name'])
 
-    #klaar = json.dumps(output)
     return output
 
 def edit_security_rules(url, vsys, apikey,secrules):
 
     ACTION = "set"
     for i in secrules:
-        xpath = "/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name="+vsys+"]/rulebase/security/rules/entry[@name=\""+i+"\"]&element=<log-setting>test_Ubuntu</log-setting>"
-        print xpath
-
+        xpath = "/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name="+vsys+"]/rulebase/security/rules/entry[@name=\""+i+"\"]&element=<log-setting>testing</log-setting>"
 
         try:
             r_editrule = requests.get(url + ACTION + "&xpath=" + xpath + "&key=" + apikey)
@@ -41,12 +37,17 @@ def edit_security_rules(url, vsys, apikey,secrules):
 
     return r_editrule
 
+def commit_config(apikey):
+    URL = "https://fwpan01.biseswar.tech/api/?type=commit&cmd=<commit></commit>"
+
+    try:
+        r_editrule = requests.get(URL + "&key=" + apikey)
 
 
+    except Exception:
+        print "error"
 
-def commit_config():
-    curl_response = ''
-    return curl_response
+    return r_editrule
 
 # Call functions
 newlist = list_security_rules(URL, VSYS, APIKEY)
@@ -54,5 +55,10 @@ print newlist
 
 r_code = edit_security_rules(URL,VSYS,APIKEY,newlist)
 print r_code
+
+r_commit = commit_config(APIKEY)
+print r_commit
+
+
 
 
