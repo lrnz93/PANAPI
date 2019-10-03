@@ -17,7 +17,7 @@ def list_security_rules(url, vsys, apikey):
         r_seclist = requests.get(url+ACTION+"&xpath="+xpath+"&key="+apikey)
         time.sleep(1)
     except requests.ConnectionError as e:
-        print e
+        print (e)
         sys.exit()
 
     r_output = []
@@ -36,10 +36,10 @@ def edit_security_rules(url, vsys, apikey,secrules):
 
         try:
             r_editrule = requests.get(url + ACTION + "&xpath=" + xpath + "&key=" + apikey)
-            print "rule: "+count+"---"+ "statuscode: "+str(r_editrule.status_code)
+            print ("rule: "+count+"---"+ "statuscode: "+str(r_editrule.status_code))
             time.sleep(1)
         except requests.ConnectionError as e:
-            print e + "rule: "+count+"---"+ "statuscode: "+str(r_editrule.status_code)
+            print (e + "rule: "+count+"---"+ "statuscode: "+str(r_editrule.status_code))
             sys.exit()
 
     return ("end edit function ")
@@ -50,20 +50,20 @@ def commit_config(apikey):
 
     try:
         r_commit = requests.get(URL + "&key=" + apikey)
-        print "Commit succesfull"
+        print ("Commit succesfull")
 
     except requests.ConnectionError as e:
-        print e
+        print (e)
         sys.exit()
 
     return ("end commit function ")
 
 # Call functions
 newlist = list_security_rules(URL, VSYS, APIKEY)
-print newlist
+print (newlist)
 
 r_code = edit_security_rules(URL,VSYS,APIKEY,newlist)
-print r_code
+print (r_code)
 
 r_commit = commit_config(APIKEY)
-print r_commit
+print (r_commit)
