@@ -17,23 +17,24 @@ def list_security_rules(url, vsys, apikey):
         print e
         sys.exit()
 
-    output = []
+    r_output = []
     root_seclist = ET.fromstring(r_seclist.content)
     for child in root_seclist.iter('entry'):
-        output.append(child.attrib['name'])
+        r_output.append(child.attrib['name'])
 
-    return output
+    return r_output
 
 def edit_security_rules(url, vsys, apikey,secrules):
 
     ACTION = "set"
-    for i in secrules:
-        xpath = "/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name="+vsys+"]/rulebase/security/rules/entry[@name=\""+i+"\"]&element=<log-setting>testing</log-setting>"
+    for count in secrules:
+        xpath = "/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name="+vsys+"]/rulebase/security/rules/entry[@name=\""+count+"\"]&element=<log-setting>testing</log-setting>"
 
         try:
             r_editrule = requests.get(url + ACTION + "&xpath=" + xpath + "&key=" + apikey)
-        except Exception:
-            print "error"
+        except requests.ConnectionError as e:
+            print e
+            sys.exit()
 
     return r_editrule
 
@@ -41,12 +42,13 @@ def commit_config(apikey):
     URL = "https://fwpan01.biseswar.tech/api/?type=commit&cmd=<commit></commit>"
 
     try:
-        r_editrule = requests.get(URL + "&key=" + apikey)
+        r_commit = requests.get(URL + "&key=" + apikey)
 
-    except Exception:
-        print "error"
+    except requests.ConnectionError as e:
+        print e
+        sys.exit()
 
-    return r_editrule
+    return r_commit
 
 # Call functions
 newlist = list_security_rules(URL, VSYS, APIKEY)
