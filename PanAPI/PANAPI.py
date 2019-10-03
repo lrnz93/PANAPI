@@ -28,27 +28,29 @@ def edit_security_rules(url, vsys, apikey,secrules):
 
     ACTION = "set"
     for count in secrules:
-        xpath = "/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name="+vsys+"]/rulebase/security/rules/entry[@name=\""+count+"\"]&element=<log-setting>testing</log-setting>"
+        xpath = "/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name="+vsys+"]/rulebase/security/rules/entry[@name=\""+count+"\"]&element=<log-setting>test_Ubuntu</log-setting>"
 
         try:
             r_editrule = requests.get(url + ACTION + "&xpath=" + xpath + "&key=" + apikey)
+            print "rule: "+count+"---"+ "statuscode: "+str(r_editrule.status_code)
         except requests.ConnectionError as e:
-            print e
+            print e + "rule: "+count+"---"+ "statuscode: "+str(r_editrule.status_code)
             sys.exit()
 
-    return r_editrule
+    return ("end edit function ")
 
 def commit_config(apikey):
     URL = "https://fwpan01.biseswar.tech/api/?type=commit&cmd=<commit></commit>"
 
     try:
         r_commit = requests.get(URL + "&key=" + apikey)
+        print "Commit succesfull"
 
     except requests.ConnectionError as e:
         print e
         sys.exit()
 
-    return r_commit
+    return ("end commit function ")
 
 # Call functions
 newlist = list_security_rules(URL, VSYS, APIKEY)
