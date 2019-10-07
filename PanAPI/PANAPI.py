@@ -4,12 +4,13 @@ import sys
 import time
 
 # Lorenzo Rozenblad
+#Make a configuration backup before running script!
 
 #Static values
-APIKEY = "LUFRPT15OC9NSjRobndlMmsvT3dBazRweU9HaHNnczQ9VkhLS3oyLzFiaDdGMm9LTHU3eW0rRW9FTEh2bDhHbUpsQzg4QUlIQkdpRExUYjlTb2RDZHdoY1R6eGs5cmY0Tg=="
+APIKEY = "<APIKEY>"
 VSYS = "\"vsys1\""
 URL = "https://fwpan01.biseswar.tech/api/?type=config&action="
-LOGNAME = "test_Ubuntu"
+LOGNAME = "testing"
 
 # function create firwall list
 def list_security_rules(url, vsys, apikey):
