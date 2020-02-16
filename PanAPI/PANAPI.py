@@ -9,7 +9,7 @@ import time
 #Static values
 APIKEY = "<APIKEY>"
 VSYS = "\"vsys1\""
-URL = "https://fwpan01.biseswar.tech/api/?type=config&action="
+URL = "https://<url>/api/?type=config&action="
 LOGNAME = "testing"
 
 # function create firwall list
@@ -50,7 +50,7 @@ def edit_security_rules(url, vsys, apikey,secrules, logname):
 
 #function commit to firewall
 def commit_config(apikey):
-    URL = "https://fwpan01.biseswar.tech/api/?type=commit&cmd=<commit></commit>"
+    URL = "https://<url>/api/?type=commit&cmd=<commit></commit>"
 
     try:
         r_commit = requests.get(URL + "&key=" + apikey)
